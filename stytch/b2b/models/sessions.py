@@ -38,6 +38,10 @@ class MemberSession(pydantic.BaseModel):
     custom_claims: Dict[str, Any]
     organization_id: str
 
+    @pydantic.field_validator("custom_claims", pre=True)
+    def validate_custom_claims(_cls, v):
+        return v.custom_claims or {}
+
 
 class AuthenticateResponse(ResponseBase):
     """Response type for `Sessions.authenticate`.
